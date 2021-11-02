@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org">
+
+<head th:include="fragments/header :: header">
+</head>
+<body>
+<div th:include="fragments/navbar :: navbar"></div>
+
+<main class="container content box">
+
+    <h1 class="title"> Opret en ønskeseddel </h1>
+    <p class="subtitle"> Udfyld dine oplysninger for at arrangere en afhentning ved adressen.</p>
+
+    <form method="post" action="#">
+        <div class="field">
+            <label class="label" for="the_name"> Fornavn*</label>
+            <input type="text" name="firstname" id="the_name" class="input" placeholder= "Indtast navn" required>
+        </div>
+
+        
+    </form>
+</main>
+
+</body>
+<footer th:include="fragments/footer :: footer">
+</footer>
+</html>

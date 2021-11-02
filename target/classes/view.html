@@ -6,8 +6,29 @@
 
 <body>
     <div th:include="fragments/navbar :: navbar"></div>
+    <section class="section">
+        <h1 class="title" th:each="wishlist : ${Wishlist.getName()}">
+            ${wishlist}</h1>
+        <h2 class="subtitle" th:each="wishlist : ${Wishlist.getDescription()}"">
+            ${wishlist}        
+        </h2>
+      </section>
     <!--- Cards for holding facts -->
-    
+    div class="card">
+    <div class="card-content">
+      <div class="media">
+        <div class="media-content">
+            <p class="title is-4" id="title">Navn her</p>
+            <p class="subtitle is-5" id ="subtitle">Pris her</p>
+        </div>
+        <div class="media-right">
+            <a href="linkher" target="_blank">
+                <button class="button">Besøg produkt</button>
+            </a>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 <footer th:include="fragments/footer :: footer">
 </footer>

@@ -9,14 +9,16 @@
 <main class="container content box">
 
     <h1 class="title"> Opret en ønskeseddel </h1>
-    <p class="subtitle"> Udfyld dine oplysninger for at arrangere en afhentning ved adressen.</p>
-
     <form method="post" action="#">
         <div class="field">
-            <label class="label" for="the_name"> Fornavn*</label>
-            <input type="text" name="firstname" id="the_name" class="input" placeholder= "Indtast navn" required>
+            <label class="label" for="name"> Navn</label>
+            <input type="text" name="name" id="name" class="input" placeholder= "Indtast navn på ønskeseddel" required>
         </div>
-
+        <div class="field">
+            <label class="label" for="description"> Description</label>
+            <input type="text" name="description" id="description" class="input" placeholder= "Indtast beskrivelse på denne ønskeseddel" required>
+        </div>
+        <button class="button is-primary">Opret</button>
         
     </form>
 </main>

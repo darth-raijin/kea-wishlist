@@ -31,8 +31,8 @@ public class Database {
         try {
             // Result bliver brugt til at skaffe det korrekte ID efter at der bliver indsat
             preparedStatement = connection.prepareStatement(insstr, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setString(1, name);
-            preparedStatement.setString(2, description);
+            preparedStatement.setString(1, name.replace("[","").replace("]",""));
+            preparedStatement.setString(2, description.replace("[","").replace("]",""));
             preparedStatement.executeUpdate();
 
             ResultSet column = preparedStatement.getGeneratedKeys();
@@ -48,5 +48,31 @@ public class Database {
         System.out.println("good happened");
         System.out.println(result);
         return result;
+    }
+
+    public String[] getWishlist(String id) {
+        setConnection();
+        String insstr = "SELECT * FROM Wishlist WHERE ID = ?";
+        PreparedStatement preparedStatement;
+        try {
+            // Result bliver brugt til at skaffe det korrekte ID efter at der bliver indsat
+            preparedStatement = connection.prepareStatement(insstr);
+            preparedStatement.setString(1, id);
+            ResultSet rs =  preparedStatement.executeQuery();
+
+            if(rs.next()) {
+                rs.beforeFirst();
+                while(rs.next()) {
+                    String[] result = {rs.getString("id"), rs.getString("name"), rs.getString("description")};
+                    return result;
+                }
+             }
+        } catch (SQLException err) {
+            System.out.println("bad happened:" + err.getMessage());
+            String[] result = {"error"};
+            return result;
+        }
+        // Hvis Wishlist ikke bliver fundet returnere den null
+        return null;
     }
 }

@@ -10,7 +10,7 @@ public class Database {
     private Connection connection = null;
 
     public boolean setConnection() {
-        final String url = "sql11.freemysqlhosting.net:3306/sql11448225"; // TODO FIX LOGIN
+        final String url = "jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11448225"; // TODO FIX LOGIN
         boolean res = false;
         try {
             connection = DriverManager.getConnection(url, "sql11448225", "qKAVsCQ78i");

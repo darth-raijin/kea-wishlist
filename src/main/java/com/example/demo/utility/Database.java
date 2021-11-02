@@ -57,16 +57,20 @@ public class Database {
         try {
             // Result bliver brugt til at skaffe det korrekte ID efter at der bliver indsat
             preparedStatement = connection.prepareStatement(insstr);
-            preparedStatement.setString(1, id);
-            ResultSet rs =  preparedStatement.executeQuery();
+            preparedStatement.setInt(1, Integer.parseInt(id));
 
-            if(rs.next()) {
-                rs.beforeFirst();
-                while(rs.next()) {
-                    String[] result = {rs.getString("id"), rs.getString("name"), rs.getString("description")};
-                    return result;
-                }
-             }
+            System.out.println(preparedStatement + "HOHO");
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            if (rs.next()) {
+                System.out.println(rs.getString("name") + " name is here");
+                String[] result = {rs.getString("id"), rs.getString("name"),
+                        rs.getString("description")
+                };
+                return result;
+            }
+
         } catch (SQLException err) {
             System.out.println("bad happened:" + err.getMessage());
             String[] result = {"error"};

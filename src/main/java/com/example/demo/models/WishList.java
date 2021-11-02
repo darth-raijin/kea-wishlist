@@ -15,6 +15,16 @@ public class WishList {
         itemArrayList = new ArrayList<>();
     }
 
+    @Override
+    public String toString() {
+        return "WishList{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", id=" + id +
+                ", itemArrayList=" + itemArrayList +
+                '}';
+    }
+
     public String getName() {
         return name;
     }

@@ -6,13 +6,22 @@
 
 <body>
     <div th:include="fragments/navbar :: navbar"></div>
-    <section class="section">
-        <h1 class="title" th:each="wishlist : ${Wishlist.getName()}">
-            ${wishlist}</h1>
-        <h2 class="subtitle" th:each="wishlist : ${Wishlist.getDescription()}"">
-            ${wishlist}        
-        </h2>
-      </section>
+    <div>
+        <section class="section" th:each="wishlist : ${Wishlist}">
+
+            <h1 class="title" th:text = "${wishlist.name}">
+
+                ${wishlist.name}</h1>
+
+            <h2 class="subtitle" th:text = "${wishlist.description}">
+
+                ${wishlist.description}
+
+            </h2>
+
+        </section>
+    </div>
+    </div>
     <!--- Cards for holding facts -->
     <section class="section">
     <div class="card">

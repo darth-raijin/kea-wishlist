@@ -35,9 +35,11 @@ public class FrontPageController {
         System.out.println(id);
         // TODO SELECT Wishlist baseret på id
         String[] result = database.getWishlist(id);
+        System.out.println("hehe" + result[0]);
 
         if (result != null) {
-            WishList wl = new WishList(result[0], result[1], Integer.parseInt(result[2]));
+            WishList wl = new WishList(result[1], result[2], Integer.parseInt(result[0]));
+            System.out.println(wl);
             model.addAttribute("Wishlist", wl);
         }
 

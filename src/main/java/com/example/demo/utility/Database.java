@@ -1,6 +1,10 @@
 package com.example.demo.utility;
 
+import com.example.demo.models.Item;
+
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.Map;
 
 public class Database {
 
@@ -49,6 +53,53 @@ public class Database {
         System.out.println(result);
         return result;
     }
+    
+    public ArrayList <String[]> getWishlistItems(int id) {
+        System.out.println("Start of Wishlist Items");
+        setConnection();
+        String insstr = "SELECT itemID FROM Combo WHERE wishlistID = ?";
+        PreparedStatement preparedStatement;
+        
+        ArrayList<Integer> items = new ArrayList<>();
+        ArrayList<String[]> stringArrayResult = new ArrayList<>();
+        try {
+            preparedStatement = connection.prepareStatement(insstr);
+            preparedStatement.setInt(1, id);
+
+            System.out.println(preparedStatement + "HOHO");
+
+            ResultSet rs = preparedStatement.executeQuery();
+             while (rs.next()) {
+                 items.add(rs.getInt("itemID"));
+                 System.out.println("Items in While " + items);
+             }
+
+            for (int item: items) {
+                System.out.println("Entered for each");
+                insstr = "SELECT * FROM Items WHERE id = ?";
+                preparedStatement = connection.prepareStatement(insstr);
+                preparedStatement.setInt(1, item);
+
+                System.out.println(preparedStatement + "HOHO");
+
+               rs = preparedStatement.executeQuery();
+                while (rs.next()) {
+                    String[] result = {rs.getString("id"), rs.getString("name"),  rs.getString("price"), rs.getString("link")};
+                    System.out.println("85 DB " + result);
+                    stringArrayResult.add(result);
+                }
+
+                
+            }
+
+        } catch (SQLException err) {
+            System.out.println("bad happened:" + err.getMessage());
+            return null;
+        }
+        System.out.println("good happened");
+        System.out.println(stringArrayResult);
+        return stringArrayResult;
+    }
 
     public String[] getWishlist(String id) {
         setConnection();
@@ -78,5 +129,40 @@ public class Database {
         }
         // Hvis Wishlist ikke bliver fundet returnere den null
         return null;
+    }
+    public int addItem (String name, int id, double price,String link) {
+        setConnection();
+        String insstr = "INSERT INTO Items(name, price, link) values (?, ?, ?)";
+        PreparedStatement preparedStatement;
+        String result = "";
+        try {
+            // Result bliver brugt til at skaffe det korrekte ID efter at der bliver indsat
+            preparedStatement = connection.prepareStatement(insstr, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, name);
+            preparedStatement.setDouble(2, price);
+            preparedStatement.setString(3, link);
+            System.out.println(insstr);
+            preparedStatement.executeUpdate();
+
+            ResultSet column = preparedStatement.getGeneratedKeys();
+            if (column.next()) {
+                result = column.getString(1);
+                System.out.println("Created column " + result);
+
+                insstr = "INSERT INTO Combo(wishlistID, itemID) values (?, ?)";
+                preparedStatement = connection.prepareStatement(insstr, Statement.RETURN_GENERATED_KEYS);
+                preparedStatement.setInt(1, id);
+                preparedStatement.setInt(2, Integer.parseInt(result));
+                preparedStatement.executeUpdate();
+
+            }
+
+        } catch (SQLException err) {
+            System.out.println("bad happened:" + err.getMessage());
+            return 400;
+        }
+        System.out.println("good happened");
+        System.out.println(result);
+        return 200;
     }
 }

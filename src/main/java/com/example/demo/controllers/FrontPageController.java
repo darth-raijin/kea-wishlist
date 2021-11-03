@@ -1,6 +1,7 @@
 package com.example.demo.controllers;
 
 
+import com.example.demo.models.Item;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +14,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 @Controller
 public class FrontPageController {
@@ -29,22 +33,57 @@ public class FrontPageController {
         return "create";
     }
 
-    @GetMapping("/view")
-    public String view(@RequestParam String id, Model model){
+    @GetMapping("/edit")
+    public String edit(@RequestParam String id, Model model){
         // Brugt til at se en liste som ejer
-        System.out.println(id);
         // TODO SELECT Wishlist baseret på id
         String[] result = database.getWishlist(id);
-        System.out.println("hehe" + result[0]);
+        ArrayList<Item> itemList = new ArrayList<>();
 
         if (result != null) {
             WishList wl = new WishList(result[1], result[2], Integer.parseInt(result[0]));
-            System.out.println(wl);
-            model.addAttribute("Wishlist", wl);
-        }
 
-        return "view";
+            model.addAttribute("Wishlist", wl);
+            ArrayList<String[]> otherResult = new ArrayList<>();
+            otherResult = database.getWishlistItems(wl.getId());
+            System.out.println("Other result "+otherResult);
+            if (otherResult != null){
+                for (String[] item : database.getWishlistItems(wl.getId()) ){
+                    if (item[0] == "error"){
+                        return "fail";
+                    }
+                    itemList.add(new Item(Integer.parseInt(item[0]),item[1],Double.parseDouble(item[2]),item[3]));
+                }
+                System.out.println("ITEM LIST HER: " + itemList);
+                model.addAttribute("list", itemList);
+            }
+            }
+        return "edit";
     }
+
+    @PostMapping("/edit")
+    public String updateWishlist(@RequestParam MultiValueMap body, RedirectAttributes redirectAttrs) {
+        int id = Integer.parseInt(String.valueOf(body.get("wishlistID")).replace("[","").replace("]",""));
+        String name = String.valueOf(body.get("name")).replace("[","").replace("]","");
+        String description = String.valueOf(body.get("description")).replace("[","").replace("]","");
+        double price = Double.parseDouble(String.valueOf(body.get("price")).replace("[","").replace("]",""));
+        String link = String.valueOf(body.get("link")).replace("[","").replace("]","");
+
+
+        System.out.println(id + " " + name + " " + description + " " + price + " " + link);
+
+        // Database metode her
+        int result = database.addItem(name, id, price, link);
+
+        // Håndtering af godt og dårligt resultat
+        if (result == 200) {
+            redirectAttrs.addAttribute("id", id);
+            return "redirect:/edit?id={id}";
+
+        }
+        return "fail";
+    }
+
 
     @PostMapping("/create")
     public String postCreate(@RequestParam MultiValueMap body, RedirectAttributes redirectAttrs) {
@@ -61,13 +100,8 @@ public class FrontPageController {
 
         // Tilføjer attributter 
         redirectAttrs.addAttribute("id", result);
-        return "redirect:/view?id={id}";
+        return "redirect:/edit?id={id}";
 
-    }
-
-    @PostMapping ("/edit")
-    public String updateWishList (@RequestParam String id, @RequestParam MultiValueMap body) {
-        return "";
     }
 
     @GetMapping ("/share")

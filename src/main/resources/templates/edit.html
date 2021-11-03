@@ -63,11 +63,11 @@
       <div class="media">
         <div class="media-content">
             <p class="title is-4" id="title" th:text = "${item.name}"> </p>
-            <p class="subtitle is-5" id ="subtitle">Pris her</p>
+            <p class="subtitle is-5" id ="subtitle" th:text="${item.price}"></p>
         </div>
         <div class="media-right">
-            <a href="linkher" target="_blank">
-                <button class="button">Besøg produkt</button>
+            <a th:href="${item.link}" target="_blank">
+                <button class="button">Link</button>
             </a>
         </div>
       </div>

@@ -93,12 +93,11 @@ public class FrontPageController {
     public String updateWishlist(@RequestParam MultiValueMap body, RedirectAttributes redirectAttrs) {
         int id = Integer.parseInt(String.valueOf(body.get("wishlistID")).replace("[","").replace("]",""));
         String name = String.valueOf(body.get("name")).replace("[","").replace("]","");
-        String description = String.valueOf(body.get("description")).replace("[","").replace("]","");
         double price = Double.parseDouble(String.valueOf(body.get("price")).replace("[","").replace("]",""));
         String link = String.valueOf(body.get("link")).replace("[","").replace("]","");
 
 
-        System.out.println(id + " " + name + " " + description + " " + price + " " + link);
+        System.out.println(id + " " + name + " "  + price + " " + link);
 
         // Database metode her
         int result = database.addItem(name, id, price, link);

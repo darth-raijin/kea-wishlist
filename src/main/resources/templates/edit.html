@@ -21,6 +21,12 @@
                 ${wishlist.description}
 
             </h2>
+            <a href="">
+            <button class="button is-primary">Få delings link</button>
+        </a>
+        </section>
+        <section class="section">
+
             <form class="box" method="POST">
 
             <input type="hidden" id="id" name="wishlistID" th:value="${wishlist.id}">
@@ -28,13 +34,6 @@
                 <label class="label">Navn</label>
                 <div class="control">
                     <input class="input" type="emaitextl" name="name" placeholder="Navn på produkt">
-                </div>
-            </div>
-
-            <div class="field">
-                <label class="label">Beskrivelse</label>
-                <div class="control">
-                    <input class="input" type="text" name="description" placeholder="Beskrivelse af produkt">
                 </div>
             </div>
 
@@ -53,7 +52,7 @@
             </div>
             <button class="button is-primary">Opret ønske</button>
         </form>
-        </section>
+    </section>
     </div>
     </div>
     <!--- Cards for holding facts -->

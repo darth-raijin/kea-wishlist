@@ -4,7 +4,7 @@
     </head>
     <body>
         <div th:include="fragments/navbar :: navbar"></div>
-        <section class="hero is-medium is-link">
+        <section class="hero is-medium is-link header-image">
             <div class="hero-body">
                
 
@@ -16,9 +16,14 @@
               <p class="subtitle">
                 Opret en ønskeseddel og del med venner
               </p>
-
             </div>
           </section>
+          <a class="navbar-item" href="/create">
+          <button class="button is-primary is-rounded is-large is-fullwidth">
+            Lav din egen ønskeseddel her
+          </button>
+          </a>
     </body>
-    
+    <footer th:include="fragments/footer :: footer">
+    </footer>
 </html>

@@ -41,8 +41,9 @@ public class FrontPageController {
         ArrayList<Item> itemList = new ArrayList<>();
 
         if (result != null) {
+            System.out.println(result + " RESULT IS HERE");
             WishList wl = new WishList(result[1], result[2], Integer.parseInt(result[0]));
-
+            System.out.println(wl.getId()+ " WISHLIST ID ");
             model.addAttribute("Wishlist", wl);
             ArrayList<String[]> otherResult = new ArrayList<>();
             otherResult = database.getWishlistItems(wl.getId());
@@ -90,21 +91,21 @@ public class FrontPageController {
     }
 
     @PostMapping("/edit")
-    public String updateWishlist(@RequestParam MultiValueMap body, RedirectAttributes redirectAttrs) {
-        int id = Integer.parseInt(String.valueOf(body.get("wishlistID")).replace("[","").replace("]",""));
+    public String updateWishlist(@RequestParam MultiValueMap body, RedirectAttributes redirectAttrs, @RequestParam String id) {
+        int wishID = Integer.parseInt(id);
         String name = String.valueOf(body.get("name")).replace("[","").replace("]","");
         double price = Double.parseDouble(String.valueOf(body.get("price")).replace("[","").replace("]",""));
         String link = String.valueOf(body.get("link")).replace("[","").replace("]","");
 
 
-        System.out.println(id + " " + name + " "  + price + " " + link);
+        System.out.println(wishID + " " + name + " "  + price + " " + link);
 
         // Database metode her
-        int result = database.addItem(name, id, price, link);
+        int result = database.addItem(name, wishID, price, link);
 
         // Håndtering af godt og dårligt resultat
         if (result == 200) {
-            redirectAttrs.addAttribute("id", id);
+            redirectAttrs.addAttribute("id", wishID);
             return "redirect:/edit?id={id}";
 
         }

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="MySQL - @sql11.freemysqlhosting.net" uuid="d7adf474-f3c1-4e4d-ad13-0ae73581022c">
+    <data-source source="LOCAL" name="heroku_ae18e19e8feb955@eu-cdbr-west-01.cleardb.com" uuid="3c50b793-7d4c-4047-a42b-89d5e5839ad4">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://sql11.freemysqlhosting.net:3306</jdbc-url>
+      <jdbc-url>jdbc:mysql://eu-cdbr-west-01.cleardb.com/heroku_ae18e19e8feb955?reconnect=true&amp;autoReconnect=true</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

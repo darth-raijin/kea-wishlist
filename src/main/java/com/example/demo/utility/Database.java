@@ -14,10 +14,10 @@ public class Database {
     private Connection connection = null;
 
     public boolean setConnection() {
-        final String url = "jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11448225"; // TODO FIX LOGIN
+        final String url = "jdbc:mysql://eu-cdbr-west-01.cleardb.com/heroku_ae18e19e8feb955?reconnect=true&autoReconnect=true"; // TODO FIX LOGIN
         boolean res = false;
         try {
-            connection = DriverManager.getConnection(url, "sql11448225", "qKAVsCQ78i");
+            connection = DriverManager.getConnection(url, "b9ccce1d85d850", "b4af5854");
             res = true;
             System.out.println("Connection made!");
         } catch (SQLException ioerr) {

@@ -116,6 +116,7 @@ public class Database {
 
             if (rs.next()) {
                 System.out.println(rs.getString("name") + " name is here");
+                // Alt bliver hentet som String[]
                 String[] result = {rs.getString("id"), rs.getString("name"),
                         rs.getString("description")
                 };

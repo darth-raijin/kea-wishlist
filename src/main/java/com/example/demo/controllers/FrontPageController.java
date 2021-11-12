@@ -41,13 +41,14 @@ public class FrontPageController {
         ArrayList<Item> itemList = new ArrayList<>();
 
         if (result != null) {
-            System.out.println(result + " RESULT IS HERE");
             WishList wl = new WishList(result[1], result[2], Integer.parseInt(result[0]));
-            System.out.println(wl.getId()+ " WISHLIST ID ");
+
+            model.addAttribute("sharelink", String.format("/view?id=%s", wl.getId()));
             model.addAttribute("Wishlist", wl);
+
             ArrayList<String[]> otherResult = new ArrayList<>();
             otherResult = database.getWishlistItems(wl.getId());
-            System.out.println("Other result "+otherResult);
+
             if (otherResult != null){
                 for (String[] item : database.getWishlistItems(wl.getId()) ){
                     if (item[0] == "error"){
@@ -64,18 +65,16 @@ public class FrontPageController {
 
     @GetMapping("/view")
     public String view(@RequestParam String id, Model model){
-        // Brugt til at se en liste som ejer
-        // TODO SELECT Wishlist baseret på id
         String[] result = database.getWishlist(id);
         ArrayList<Item> itemList = new ArrayList<>();
 
         if (result != null) {
             WishList wl = new WishList(result[1], result[2], Integer.parseInt(result[0]));
-
             model.addAttribute("Wishlist", wl);
+
             ArrayList<String[]> otherResult = new ArrayList<>();
             otherResult = database.getWishlistItems(wl.getId());
-            System.out.println("Other result "+otherResult);
+
             if (otherResult != null){
                 for (String[] item : database.getWishlistItems(wl.getId()) ){
                     if (item[0] == "error"){

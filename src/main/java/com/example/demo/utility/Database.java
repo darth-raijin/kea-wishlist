@@ -46,11 +46,10 @@ public class Database {
             }
 
         } catch (SQLException err) {
-            System.out.println("bad happened:" + err.getMessage());
+            System.out.println("Something went wrong:" + err.getMessage());
             return "400";
         }
-        System.out.println("good happened");
-        System.out.println(result);
+        System.out.println("Wishlist created successfully");
         return result;
     }
     
@@ -66,26 +65,20 @@ public class Database {
             preparedStatement = connection.prepareStatement(insstr);
             preparedStatement.setInt(1, id);
 
-            System.out.println(preparedStatement + "HOHO");
-
             ResultSet rs = preparedStatement.executeQuery();
              while (rs.next()) {
                  items.add(rs.getInt("itemID"));
-                 System.out.println("Items in While " + items);
              }
 
-            for (int item: items) {
+            for (int item : items) {
                 System.out.println("Entered for each");
                 insstr = "SELECT * FROM Items WHERE id = ?";
                 preparedStatement = connection.prepareStatement(insstr);
                 preparedStatement.setInt(1, item);
 
-                System.out.println(preparedStatement + "HOHO");
-
                rs = preparedStatement.executeQuery();
                 while (rs.next()) {
                     String[] result = {rs.getString("id"), rs.getString("name"),  rs.getString("price"), rs.getString("link")};
-                    System.out.println("85 DB " + result);
                     stringArrayResult.add(result);
                 }
 
@@ -93,10 +86,10 @@ public class Database {
             }
 
         } catch (SQLException err) {
-            System.out.println("bad happened:" + err.getMessage());
+            System.out.println("Something went wrong:" + err.getMessage());
             return null;
         }
-        System.out.println("good happened");
+        System.out.println("Succesfully fetched wishlist: " + id);
         System.out.println(stringArrayResult);
         return stringArrayResult;
     }
@@ -110,12 +103,9 @@ public class Database {
             preparedStatement = connection.prepareStatement(insstr);
             preparedStatement.setInt(1, Integer.parseInt(id));
 
-            System.out.println(preparedStatement + "HOHO");
-
             ResultSet rs = preparedStatement.executeQuery();
 
             if (rs.next()) {
-                System.out.println(rs.getString("name") + " name is here");
                 // Alt bliver hentet som String[]
                 String[] result = {rs.getString("id"), rs.getString("name"),
                         rs.getString("description")
@@ -124,7 +114,7 @@ public class Database {
             }
 
         } catch (SQLException err) {
-            System.out.println("bad happened:" + err.getMessage());
+            System.out.println("Something went wrong:" + err.getMessage());
             String[] result = {"error"};
             return result;
         }
